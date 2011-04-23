@@ -1,0 +1,15 @@
+--- openfst-1.2.7/src/lib/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
++++ openfst-1.2.7/src/lib/Makefile.am	2011-04-23 07:04:02.037016345 +0200
+@@ -4,3 +4,4 @@ lib_LTLIBRARIES = libfst.la
+ libfst_la_SOURCES = compat.cc flags.cc fst.cc properties.cc \
+ symbol-table.cc util.cc
+ libfst_la_LDFLAGS = -version-info 0:0:0
++libfst_la_LIBADD = -ldl
+--- openfst-1.2.7/src/script/Makefile.am.orig	2011-03-12 00:54:42.000000000 +0100
++++ openfst-1.2.7/src/script/Makefile.am	2011-04-23 07:04:34.287017545 +0200
+@@ -12,4 +12,5 @@ shortest-path.cc synchronize.cc text-io.
+ weight-class.cc
+ 
+ libfstscript_la_LDFLAGS = -version-info 0:0:0
++libfstscript_la_LIBADD = $(top_builddir)/src/lib/libfst.la -ldl
+ endif
