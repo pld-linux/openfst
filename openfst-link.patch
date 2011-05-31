@@ -35,6 +35,15 @@
  const8_fst_la_LDFLAGS = -module
 --- openfst-1.2.7/src/extensions/far/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
 +++ openfst-1.2.7/src/extensions/far/Makefile.am	2011-05-30 21:15:13.067873790 +0200
+@@ -4,7 +4,7 @@
+ libfstdir = @libfstdir@
+ 
+ if HAVE_SCRIPT
+-libfst_LTLIBRARIES = libfstfarscript.la libfstfar.la
++libfst_LTLIBRARIES = libfstfar.la libfstfarscript.la
+ else
+ libfst_LTLIBRARIES = libfstfar.la
+ endif
 @@ -15,6 +15,7 @@
  if HAVE_SCRIPT
  libfstfarscript_la_SOURCES = farscript.cc compile-strings.cc main.cc
