@@ -2,7 +2,7 @@ Summary:	OpenFst - library for finite state transducers development
 Summary(pl.UTF-8):	OpenFst - biblioteka do programowania automatów skończonych z wyjściem
 Name:		openfst
 Version:	1.2.7
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		Libraries
 #Source0Download: http://www.openfst.org/twiki/bin/view/FST/FstDownload
