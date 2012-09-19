@@ -1,13 +1,13 @@
 Summary:	OpenFst - library for finite state transducers development
 Summary(pl.UTF-8):	OpenFst - biblioteka do programowania automatów skończonych z wyjściem
 Name:		openfst
-Version:	1.2.7
-Release:	3
+Version:	1.3.2
+Release:	1
 License:	Apache v2.0
 Group:		Libraries
 #Source0Download: http://www.openfst.org/twiki/bin/view/FST/FstDownload
 Source0:	http://www.openfst.org/twiki/pub/FST/FstDownload/%{name}-%{version}.tar.gz
-# Source0-md5:	97196a97d2a1ec88d612321e64dac2e4
+# Source0-md5:	9b0d777f177d9917bb93adef19b7098a
 Patch0:		%{name}-link.patch
 URL:		http://www.openfst.org/
 BuildRequires:	autoconf >= 2.50
@@ -15,6 +15,7 @@ BuildRequires:	automake
 BuildRequires:	libicu-devel >= 4.2
 BuildRequires:	libstdc++-devel >= 6:4.1
 BuildRequires:	libtool >= 2:1.5
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # modules dlopened from libfst refer to symbols from the library
@@ -57,6 +58,9 @@ Statyczna biblioteka OpenFst.
 %setup -q
 %patch0 -p1
 
+# kill am portability warning (there is -Werror)
+sed -i -e '/AC_PROG_LIBTOOL/aAM_PROG_AR' configure.ac
+
 %build
 %{__libtoolize}
 %{__aclocal} -I m4
@@ -68,6 +72,7 @@ Statyczna biblioteka OpenFst.
 	--enable-const-fsts \
 	--enable-far \
 	--enable-lookahead-fsts \
+	--enable-ngram-fsts \
 	--enable-pdt \
 	--enable-static \
 	--with-icu
@@ -90,7 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README
+%doc AUTHORS COPYING NEWS README
 %attr(755,root,root) %{_bindir}/far*
 %attr(755,root,root) %{_bindir}/fst*
 %attr(755,root,root) %{_bindir}/pdt*
