@@ -1,20 +1,26 @@
+#
+# Conditional build:
+%bcond_without	python		# python extensions
+%bcond_without	static_libs	# static library
+#
 Summary:	OpenFst - library for finite state transducers development
 Summary(pl.UTF-8):	OpenFst - biblioteka do programowania automatów skończonych z wyjściem
 Name:		openfst
-Version:	1.3.3
+Version:	1.5.0
 Release:	1
 License:	Apache v2.0
 Group:		Libraries
 #Source0Download: http://www.openfst.org/twiki/bin/view/FST/FstDownload
 Source0:	http://www.openfst.org/twiki/pub/FST/FstDownload/%{name}-%{version}.tar.gz
-# Source0-md5:	c7ba9e791eba501bb9d5b95ccc6e5231
+# Source0-md5:	a24fee5ffe28744c6fb7b1a49e0006c4
 Patch0:		%{name}-link.patch
+Patch1:		%{name}-python.patch
 URL:		http://www.openfst.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	libstdc++-devel >= 6:4.1
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	libtool >= 2:1.5
-BuildRequires:	sed >= 4.0
+%{?with_python:BuildRequires:	python-devel >= 1:2.7}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # modules dlopened from libfst refer to symbols from the library
@@ -33,7 +39,7 @@ Summary:	Header files for OpenFst library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki OpenFst
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	libstdc++-devel >= 6:4.1
+Requires:	libstdc++-devel >= 6:4.7
 
 %description devel
 Header files for OpenFst library.
@@ -53,12 +59,23 @@ Static OpenFst library.
 %description static -l pl.UTF-8
 Statyczna biblioteka OpenFst.
 
+%package -n python-openfst
+Summary:	Python binding for OpenFst
+Summary(pl.UTF-8):	Wiązanie Pythona do biblioteki OpenFst
+Group:		Libraries/Python
+Requires:	%{name} = %{version}-%{release}
+Requires:	python-libs >= 1:2.7
+
+%description -n python-openfst
+Python binding for OpenFst.
+
+%description -n python-openfst -l pl.UTF-8
+Wiązanie Pythona do biblioteki OpenFst.
+
 %prep
 %setup -q
 %patch0 -p1
-
-# kill am portability warning (there is -Werror)
-%{__sed} -i -e '/AC_PROG_LIBTOOL/iAM_PROG_AR' configure.ac
+%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -68,12 +85,16 @@ Statyczna biblioteka OpenFst.
 %{__automake}
 %configure \
 	--enable-compact-fsts \
+	--enable-compress \
 	--enable-const-fsts \
 	--enable-far \
+	--enable-linear-fsts \
 	--enable-lookahead-fsts \
+	--enable-mpdt \
 	--enable-ngram-fsts \
 	--enable-pdt \
-	--enable-static
+	--enable-python \
+	%{?with_static_libs:--enable-static}
 
 %{__make}
 
@@ -83,7 +104,12 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/fst/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/fst/*.la \
+	%{?with_python:$RPM_BUILD_ROOT%{py_sitedir}/fst.la}
+%if %{with static_libs}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/fst/*.a \
+	%{?with_python:$RPM_BUILD_ROOT%{py_sitedir}/fst.a}
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -96,6 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING NEWS README
 %attr(755,root,root) %{_bindir}/far*
 %attr(755,root,root) %{_bindir}/fst*
+%attr(755,root,root) %{_bindir}/mpdt*
 %attr(755,root,root) %{_bindir}/pdt*
 %attr(755,root,root) %{_libdir}/libfst.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libfst.so.1
@@ -112,7 +139,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libfstscript.la
 %{_includedir}/fst
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libfst.a
 %{_libdir}/libfstscript.a
+%endif
+
+%if %{with python}
+%files -n python-openfst
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py_sitedir}/fst.so
+%endif

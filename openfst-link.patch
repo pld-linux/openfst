@@ -1,40 +1,40 @@
---- openfst-1.3.3/src/lib/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
-+++ openfst-1.3.3/src/lib/Makefile.am	2011-04-23 07:04:02.037016345 +0200
-@@ -4,3 +4,4 @@ lib_LTLIBRARIES = libfst.la
+--- openfst-1.5.0/src/lib/Makefile.am.orig	2015-12-26 21:06:48.622906025 +0100
++++ openfst-1.5.0/src/lib/Makefile.am	2015-12-26 22:46:00.295989593 +0100
+@@ -4,3 +4,4 @@
  libfst_la_SOURCES = compat.cc flags.cc fst.cc properties.cc \
- symbol-table.cc util.cc
- libfst_la_LDFLAGS = -version-info 1:0:0
+ symbol-table.cc util.cc symbol-table-ops.cc mapped-file.cc
+ libfst_la_LDFLAGS = -version-info 1:5:0
 +libfst_la_LIBADD = -ldl
---- openfst-1.3.3/src/script/Makefile.am.orig	2011-03-12 00:54:42.000000000 +0100
-+++ openfst-1.3.3/src/script/Makefile.am	2011-04-23 07:04:34.287017545 +0200
+--- openfst-1.5.0/src/script/Makefile.am.orig	2011-03-12 00:54:42.000000000 +0100
++++ openfst-1.5.0/src/script/Makefile.am	2011-04-23 07:04:34.287017545 +0200
 @@ -12,4 +12,5 @@ shortest-path.cc synchronize.cc text-io.
  weight-class.cc
  
- libfstscript_la_LDFLAGS = -version-info 1:0:0
+ libfstscript_la_LDFLAGS = -version-info 1:5:0
 +libfstscript_la_LIBADD = $(top_builddir)/src/lib/libfst.la $(ICU_FLAGS) -ldl
  endif
---- openfst-1.3.3/src/extensions/compact/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
-+++ openfst-1.3.3/src/extensions/compact/Makefile.am	2011-05-30 21:11:04.174532124 +0200
+--- openfst-1.5.0/src/extensions/compact/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
++++ openfst-1.5.0/src/extensions/compact/Makefile.am	2011-05-30 21:11:04.174532124 +0200
 @@ -6,6 +6,7 @@
  
  libfstcompact_la_SOURCES = compact8_acceptor-fst.cc compact8_string-fst.cc compact8_unweighted-fst.cc compact8_unweighted_acceptor-fst.cc compact8_weighted_string-fst.cc compact16_acceptor-fst.cc compact16_string-fst.cc compact16_unweighted-fst.cc compact16_unweighted_acceptor-fst.cc compact16_weighted_string-fst.cc compact64_acceptor-fst.cc compact64_string-fst.cc compact64_unweighted-fst.cc compact64_unweighted_acceptor-fst.cc compact64_weighted_string-fst.cc
- libfstcompact_la_LDFLAGS = -version-info 1:0:0
+ libfstcompact_la_LDFLAGS = -version-info 1:5:0
 +libfstcompact_la_LIBADD = $(top_builddir)/src/lib/libfst.la -ldl
  
  compact8_acceptor_fst_la_SOURCES = compact8_acceptor-fst.cc
  compact8_acceptor_fst_la_LDFLAGS = -module
---- openfst-1.3.3/src/extensions/const/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
-+++ openfst-1.3.3/src/extensions/const/Makefile.am	2011-05-30 21:12:20.464534677 +0200
+--- openfst-1.5.0/src/extensions/const/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
++++ openfst-1.5.0/src/extensions/const/Makefile.am	2011-05-30 21:12:20.464534677 +0200
 @@ -6,6 +6,7 @@
  
  libfstconst_la_SOURCES = const8-fst.cc const16-fst.cc const64-fst.cc
- libfstconst_la_LDFLAGS = -version-info 1:0:0
+ libfstconst_la_LDFLAGS = -version-info 1:5:0
 +libfstconst_la_LIBADD = $(top_builddir)/src/lib/libfst.la -ldl
  
  const8_fst_la_SOURCES = const8-fst.cc
  const8_fst_la_LDFLAGS = -module
---- openfst-1.3.3/src/extensions/far/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
-+++ openfst-1.3.3/src/extensions/far/Makefile.am	2011-05-30 21:15:13.067873790 +0200
+--- openfst-1.5.0/src/extensions/far/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
++++ openfst-1.5.0/src/extensions/far/Makefile.am	2011-05-30 21:15:13.067873790 +0200
 @@ -4,7 +4,7 @@
  libfstdir = @libfstdir@
  
@@ -47,26 +47,26 @@
 @@ -15,6 +15,7 @@
  if HAVE_SCRIPT
  libfstfarscript_la_SOURCES = farscript.cc compile-strings.cc main.cc
- libfstfarscript_la_LDFLAGS = -version-info 1:0:0
+ libfstfarscript_la_LDFLAGS = -version-info 1:5:0
 +libfstfarscript_la_LIBADD = libfstfar.la $(top_builddir)/src/lib/libfst.la $(ICU_LIBS) -ldl
  endif
  
  if HAVE_BIN
---- openfst-1.3.3/src/extensions/lookahead/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
-+++ openfst-1.3.3/src/extensions/lookahead/Makefile.am	2011-05-30 21:16:34.171209838 +0200
+--- openfst-1.5.0/src/extensions/lookahead/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
++++ openfst-1.5.0/src/extensions/lookahead/Makefile.am	2011-05-30 21:16:34.171209838 +0200
 @@ -8,6 +8,7 @@
  libfstlookahead_la_SOURCES = arc_lookahead-fst.cc ilabel_lookahead-fst.cc \
  olabel_lookahead-fst.cc
- libfstlookahead_la_LDFLAGS = -version-info 0:0:0
+ libfstlookahead_la_LDFLAGS = -version-info 1:5:0
 +libfstlookahead_la_LIBADD = $(top_builddir)/src/lib/libfst.la -ldl
  
  arc_lookahead_fst_la_SOURCES = arc_lookahead-fst.cc
  arc_lookahead_fst_la_LDFLAGS = -module
---- openfst-1.3.3/src/extensions/pdt/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
-+++ openfst-1.3.3/src/extensions/pdt/Makefile.am	2011-05-30 21:18:50.077881058 +0200
+--- openfst-1.5.0/src/extensions/pdt/Makefile.am.orig	2011-03-12 00:54:41.000000000 +0100
++++ openfst-1.5.0/src/extensions/pdt/Makefile.am	2011-05-30 21:18:50.077881058 +0200
 @@ -32,4 +32,5 @@
  libfst_LTLIBRARIES = libfstpdtscript.la
  libfstpdtscript_la_SOURCES = pdtscript.cc
- libfstpdtscript_la_LDFLAGS = -version-info 1:0:0
+ libfstpdtscript_la_LDFLAGS = -version-info 1:5:0
 +libfstpdtscript_la_LIBADD = $(top_builddir)/src/script/libfstscript.la $(top_builddir)/src/lib/libfst.la -ldl
  endif

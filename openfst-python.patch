@@ -1,0 +1,16 @@
+--- openfst-1.5.0/src/extensions/python/Makefile.am.orig	2015-07-01 02:58:24.000000000 +0200
++++ openfst-1.5.0/src/extensions/python/Makefile.am	2015-12-27 10:40:49.034189720 +0100
+@@ -1,11 +1,10 @@
+-python_LTLIBRARIES = fst.la
++pyexec_LTLIBRARIES = fst.la
+ 
+-pyexec_LTILIBRARIES = fst.la
+ fst_la_SOURCES = fst.cc
+ fst_la_CPPFLAGS = -I$(srcdir)/../../include $(PYTHON_CPPFLAGS)
+ fst_la_LDFLAGS = $(PYTHON_LDFLAGS) -avoid-version -module
+ fst_la_LIBADD = ../../script/libfstscript.la ../../lib/libfst.la \
+-								-lfstscript -lfst -lm -ldl
++								-lm -ldl
+ 
+ # NB: we use the Cython-generated .cc, rather than the .pyx source file, so 
+ # modifications to the .pyx will not influence the build.
