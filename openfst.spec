@@ -6,15 +6,14 @@
 Summary:	OpenFst - library for finite state transducers development
 Summary(pl.UTF-8):	OpenFst - biblioteka do programowania automatów skończonych z wyjściem
 Name:		openfst
-Version:	1.5.0
+Version:	1.5.3
 Release:	1
 License:	Apache v2.0
 Group:		Libraries
 #Source0Download: http://www.openfst.org/twiki/bin/view/FST/FstDownload
 Source0:	http://www.openfst.org/twiki/pub/FST/FstDownload/%{name}-%{version}.tar.gz
-# Source0-md5:	a24fee5ffe28744c6fb7b1a49e0006c4
-Patch0:		%{name}-link.patch
-Patch1:		%{name}-python.patch
+# Source0-md5:	f04e580b5bc574571854304c9656a3e2
+Patch0:		%{name}-python.patch
 URL:		http://www.openfst.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -75,7 +74,6 @@ Wiązanie Pythona do biblioteki OpenFst.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -105,10 +103,10 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/fst/*.la \
-	%{?with_python:$RPM_BUILD_ROOT%{py_sitedir}/fst.la}
+	%{?with_python:$RPM_BUILD_ROOT%{py_sitedir}/pywrapfst.la}
 %if %{with static_libs}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/fst/*.a \
-	%{?with_python:$RPM_BUILD_ROOT%{py_sitedir}/fst.a}
+	%{?with_python:$RPM_BUILD_ROOT%{py_sitedir}/pywrapfst.a}
 %endif
 
 %clean
@@ -125,17 +123,57 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mpdt*
 %attr(755,root,root) %{_bindir}/pdt*
 %attr(755,root,root) %{_libdir}/libfst.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfst.so.1
+%attr(755,root,root) %ghost %{_libdir}/libfst.so.4
+%attr(755,root,root) %{_libdir}/libfstcompact.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfstcompact.so.4
+%attr(755,root,root) %{_libdir}/libfstcompressscript.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfstcompressscript.so.4
+%attr(755,root,root) %{_libdir}/libfstconst.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfstconst.so.4
+%attr(755,root,root) %{_libdir}/libfstfar.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfstfar.so.4
+%attr(755,root,root) %{_libdir}/libfstfarscript.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfstfarscript.so.4
+%attr(755,root,root) %{_libdir}/libfstlinearscript.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfstlinearscript.so.4
+%attr(755,root,root) %{_libdir}/libfstlookahead.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfstlookahead.so.4
+%attr(755,root,root) %{_libdir}/libfstmpdtscript.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfstmpdtscript.so.4
+%attr(755,root,root) %{_libdir}/libfstngram.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfstngram.so.4
+%attr(755,root,root) %{_libdir}/libfstpdtscript.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfstpdtscript.so.4
 %attr(755,root,root) %{_libdir}/libfstscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstscript.so.1
+%attr(755,root,root) %ghost %{_libdir}/libfstscript.so.4
 %dir %{_libdir}/fst
 %attr(755,root,root) %{_libdir}/fst/*.so*
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libfst.so
+%attr(755,root,root) %{_libdir}/libfstcompact.so
+%attr(755,root,root) %{_libdir}/libfstcompressscript.so
+%attr(755,root,root) %{_libdir}/libfstconst.so
+%attr(755,root,root) %{_libdir}/libfstfar.so
+%attr(755,root,root) %{_libdir}/libfstfarscript.so
+%attr(755,root,root) %{_libdir}/libfstlinearscript.so
+%attr(755,root,root) %{_libdir}/libfstlookahead.so
+%attr(755,root,root) %{_libdir}/libfstmpdtscript.so
+%attr(755,root,root) %{_libdir}/libfstngram.so
+%attr(755,root,root) %{_libdir}/libfstpdtscript.so
 %attr(755,root,root) %{_libdir}/libfstscript.so
 %{_libdir}/libfst.la
+%{_libdir}/libfstcompact.la
+%{_libdir}/libfstcompressscript.la
+%{_libdir}/libfstconst.la
+%{_libdir}/libfstfar.la
+%{_libdir}/libfstfarscript.la
+%{_libdir}/libfstlinearscript.la
+%{_libdir}/libfstlookahead.la
+%{_libdir}/libfstmpdtscript.la
+%{_libdir}/libfstngram.la
+%{_libdir}/libfstpdtscript.la
 %{_libdir}/libfstscript.la
 %{_includedir}/fst
 
@@ -143,11 +181,21 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libfst.a
+%{_libdir}/libfstcompact.a
+%{_libdir}/libfstcompressscript.a
+%{_libdir}/libfstconst.a
+%{_libdir}/libfstfar.a
+%{_libdir}/libfstfarscript.a
+%{_libdir}/libfstlinearscript.a
+%{_libdir}/libfstlookahead.a
+%{_libdir}/libfstmpdtscript.a
+%{_libdir}/libfstngram.a
+%{_libdir}/libfstpdtscript.a
 %{_libdir}/libfstscript.a
 %endif
 
 %if %{with python}
 %files -n python-openfst
 %defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/fst.so
+%attr(755,root,root) %{py_sitedir}/pywrapfst.so
 %endif

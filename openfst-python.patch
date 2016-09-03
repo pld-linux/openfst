@@ -1,16 +1,13 @@
---- openfst-1.5.0/src/extensions/python/Makefile.am.orig	2015-07-01 02:58:24.000000000 +0200
-+++ openfst-1.5.0/src/extensions/python/Makefile.am	2015-12-27 10:40:49.034189720 +0100
-@@ -1,11 +1,10 @@
--python_LTLIBRARIES = fst.la
-+pyexec_LTLIBRARIES = fst.la
+--- openfst-1.5.3/src/extensions/python/Makefile.am.orig	2016-09-02 21:47:46.995731836 +0200
++++ openfst-1.5.3/src/extensions/python/Makefile.am	2016-09-02 21:49:39.489063884 +0200
+@@ -2,9 +2,7 @@
+ # used to generate them. Consequently, modifications to the .pyx files will not
+ # influence the build unless the .cc files are regenerated using Cython.
  
--pyexec_LTILIBRARIES = fst.la
- fst_la_SOURCES = fst.cc
- fst_la_CPPFLAGS = -I$(srcdir)/../../include $(PYTHON_CPPFLAGS)
- fst_la_LDFLAGS = $(PYTHON_LDFLAGS) -avoid-version -module
- fst_la_LIBADD = ../../script/libfstscript.la ../../lib/libfst.la \
--								-lfstscript -lfst -lm -ldl
-+								-lm -ldl
+-python_LTLIBRARIES = pywrapfst.la
+-
+-pyexec_LTILIBRARIES = pywrapfst.la
++pyexec_LTLIBRARIES = pywrapfst.la
  
- # NB: we use the Cython-generated .cc, rather than the .pyx source file, so 
- # modifications to the .pyx will not influence the build.
+ pywrapfst_la_SOURCES = pywrapfst.cc
+ pywrapfst_la_CPPFLAGS = -I$(srcdir)/../../include $(PYTHON_CPPFLAGS)
