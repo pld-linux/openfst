@@ -6,13 +6,13 @@
 Summary:	OpenFst - library for finite state transducers development
 Summary(pl.UTF-8):	OpenFst - biblioteka do programowania automatów skończonych z wyjściem
 Name:		openfst
-Version:	1.5.3
+Version:	1.6.5
 Release:	1
 License:	Apache v2.0
 Group:		Libraries
 #Source0Download: http://www.openfst.org/twiki/bin/view/FST/FstDownload
 Source0:	http://www.openfst.org/twiki/pub/FST/FstDownload/%{name}-%{version}.tar.gz
-# Source0-md5:	f04e580b5bc574571854304c9656a3e2
+# Source0-md5:	60bed07f4f5857d9be2e6f1ab3a2f055
 Patch0:		%{name}-python.patch
 URL:		http://www.openfst.org/
 BuildRequires:	autoconf >= 2.50
@@ -123,29 +123,29 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mpdt*
 %attr(755,root,root) %{_bindir}/pdt*
 %attr(755,root,root) %{_libdir}/libfst.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfst.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfst.so.8
 %attr(755,root,root) %{_libdir}/libfstcompact.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstcompact.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstcompact.so.8
 %attr(755,root,root) %{_libdir}/libfstcompressscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstcompressscript.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstcompressscript.so.8
 %attr(755,root,root) %{_libdir}/libfstconst.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstconst.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstconst.so.8
 %attr(755,root,root) %{_libdir}/libfstfar.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstfar.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstfar.so.8
 %attr(755,root,root) %{_libdir}/libfstfarscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstfarscript.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstfarscript.so.8
 %attr(755,root,root) %{_libdir}/libfstlinearscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstlinearscript.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstlinearscript.so.8
 %attr(755,root,root) %{_libdir}/libfstlookahead.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstlookahead.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstlookahead.so.8
 %attr(755,root,root) %{_libdir}/libfstmpdtscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstmpdtscript.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstmpdtscript.so.8
 %attr(755,root,root) %{_libdir}/libfstngram.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstngram.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstngram.so.8
 %attr(755,root,root) %{_libdir}/libfstpdtscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstpdtscript.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstpdtscript.so.8
 %attr(755,root,root) %{_libdir}/libfstscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstscript.so.4
+%attr(755,root,root) %ghost %{_libdir}/libfstscript.so.8
 %dir %{_libdir}/fst
 %attr(755,root,root) %{_libdir}/fst/*.so*
 
