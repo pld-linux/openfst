@@ -6,20 +6,26 @@
 Summary:	OpenFst - library for finite state transducers development
 Summary(pl.UTF-8):	OpenFst - biblioteka do programowania automatów skończonych z wyjściem
 Name:		openfst
-Version:	1.6.9
+Version:	1.7.4
 Release:	1
 License:	Apache v2.0
 Group:		Libraries
 #Source0Download: http://www.openfst.org/twiki/bin/view/FST/FstDownload
 Source0:	http://www.openfst.org/twiki/pub/FST/FstDownload/%{name}-%{version}.tar.gz
-# Source0-md5:	0f54cb77a84055292d0ea26728fed8a0
+# Source0-md5:	41933fd5c1911f7a36b894df96624986
 Patch0:		%{name}-python.patch
 URL:		http://www.openfst.org/
+%ifarch %{ix86} %{x8664} x32
+BuildRequires:	cpuinfo(sse2)
+%endif
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	libtool >= 2:1.5
 %{?with_python:BuildRequires:	python-devel >= 1:2.7}
+%ifarch %{ix86} %{x8664} x32
+Requires:	cpuinfo(sse2)
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # modules dlopened from libfst refer to symbols from the library
@@ -81,6 +87,12 @@ Wiązanie Pythona do biblioteki OpenFst.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+%ifarch %{ix86}
+# <fst/float-weights.h> requires float/double calculations to be done
+# directly in 32/64-bit precision, not 80-bit i387 fp registers
+CFLAGS="%{rpmcflags} -msse2 -mfpmath=sse"
+CXXFLAGS="%{rpmcxxflags} -msse2 -mfpmath=sse"
+%endif
 %configure \
 	--enable-compact-fsts \
 	--enable-compress \
@@ -123,29 +135,29 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mpdt*
 %attr(755,root,root) %{_bindir}/pdt*
 %attr(755,root,root) %{_libdir}/libfst.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfst.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfst.so.17
 %attr(755,root,root) %{_libdir}/libfstcompact.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstcompact.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstcompact.so.17
 %attr(755,root,root) %{_libdir}/libfstcompressscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstcompressscript.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstcompressscript.so.17
 %attr(755,root,root) %{_libdir}/libfstconst.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstconst.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstconst.so.17
 %attr(755,root,root) %{_libdir}/libfstfar.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstfar.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstfar.so.17
 %attr(755,root,root) %{_libdir}/libfstfarscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstfarscript.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstfarscript.so.17
 %attr(755,root,root) %{_libdir}/libfstlinearscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstlinearscript.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstlinearscript.so.17
 %attr(755,root,root) %{_libdir}/libfstlookahead.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstlookahead.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstlookahead.so.17
 %attr(755,root,root) %{_libdir}/libfstmpdtscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstmpdtscript.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstmpdtscript.so.17
 %attr(755,root,root) %{_libdir}/libfstngram.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstngram.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstngram.so.17
 %attr(755,root,root) %{_libdir}/libfstpdtscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstpdtscript.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstpdtscript.so.17
 %attr(755,root,root) %{_libdir}/libfstscript.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfstscript.so.13
+%attr(755,root,root) %ghost %{_libdir}/libfstscript.so.17
 %dir %{_libdir}/fst
 %attr(755,root,root) %{_libdir}/fst/*.so*
 
